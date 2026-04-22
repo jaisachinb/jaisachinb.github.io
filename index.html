@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jai Sachin Baskar | Usable Privacy and Security</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#1a1a1a;
+  --ink2:#3d3d3d;
+  --ink3:#767676;
+  --bg:#f7f6f3;
+  --surface:#ffffff;
+  --rule:#e2e0db;
+  --pri:#8b1a1a;
+  --pri-bg:#fdf5f5;
+  --pri-border:#dbb8b8;
+  --sec:#1c3a5e;
+  --sec-bg:#f0f4f9;
+  --accent:#b5831a;
+  --navy:#182840;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:14.5px;line-height:1.7;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.topbar{background:var(--navy);color:#fff;padding:0 40px;height:44px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:1px solid rgba(255,255,255,.07)}
+.topbar-name{font-family:'Lora',serif;font-style:italic;font-size:16px;opacity:.9;letter-spacing:.01em}
+.topbar-nav{display:flex}
+.topbar-nav a{color:rgba(255,255,255,.62);text-decoration:none;font-size:11.5px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;padding:0 14px;height:44px;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,.08);transition:color .15s,background .15s}
+.topbar-nav a:hover{color:#fff;background:rgba(255,255,255,.07)}
+
+/* LAYOUT */
+.page{max-width:1000px;margin:0 auto;padding:48px 40px 80px;display:grid;grid-template-columns:210px 1fr;gap:0 52px;align-items:start}
+
+/* SIDEBAR */
+.sidebar{position:sticky;top:60px}
+.s-name{font-family:'Lora',serif;font-size:22px;font-weight:600;line-height:1.25;margin-bottom:5px;color:var(--ink)}
+.s-title{font-size:12px;font-weight:600;color:var(--pri);line-height:1.55;margin-bottom:3px;letter-spacing:.01em}
+.s-inst{font-size:11.5px;color:var(--ink3);line-height:1.5;margin-bottom:14px}
+hr.sr{border:none;border-top:1px solid var(--rule);margin:13px 0}
+.s-lbl{font-size:9px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--ink3);margin-bottom:7px;margin-top:12px}
+.s-val{font-size:12.5px;color:var(--ink2);line-height:1.6;margin-bottom:2px}
+.s-val a{color:var(--navy);text-decoration:none}
+.s-val a:hover{text-decoration:underline}
+.s-links{list-style:none;margin-top:5px}
+.s-links li{margin-bottom:5px}
+.s-links a{font-size:12.5px;color:var(--navy);text-decoration:none;display:flex;align-items:center;gap:6px}
+.s-links a:hover{text-decoration:underline}
+
+/* INTEREST TAGS */
+.i-group{margin-top:9px}
+.i-tag{font-size:8.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;display:inline-block;padding:2px 7px;margin-bottom:5px}
+.i-tag.pri{color:var(--pri);background:var(--pri-bg);border-left:2px solid var(--pri)}
+.i-tag.sec{color:var(--sec);background:var(--sec-bg);border-left:2px solid var(--sec)}
+.i-list{list-style:none}
+.i-list li{font-size:12px;color:var(--ink2);padding:3px 0;border-bottom:1px solid var(--rule);line-height:1.4}
+.i-list li.p{font-weight:600;color:var(--pri)}
+.i-list li.s{font-weight:500;color:var(--navy)}
+
+/* MAIN */
+main{min-width:0}
+
+/* INCOMING BANNER */
+.incoming{background:var(--navy);color:#fff;padding:13px 18px;margin-bottom:30px;border-left:3px solid var(--accent);display:flex;align-items:flex-start;gap:13px}
+.in-label{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.in-title{font-family:'Lora',serif;font-size:15px;font-weight:600;line-height:1.3;margin-bottom:2px}
+.in-sub{font-size:12px;color:rgba(255,255,255,.7)}
+
+/* STATEMENT */
+.stmt{font-size:14.5px;color:var(--ink2);line-height:1.85;margin-bottom:34px;border-bottom:1px solid var(--rule);padding-bottom:30px}
+.stmt p{margin-bottom:0}
+.stmt strong{color:var(--ink);font-weight:600}
+
+/* SECTIONS */
+.sec{margin-bottom:34px;padding-bottom:30px;border-bottom:1px solid var(--rule)}
+.sec:last-child{border-bottom:none;margin-bottom:0}
+.sec-hd{font-family:'Lora',serif;font-size:18px;font-weight:600;color:var(--ink);margin-bottom:18px;padding-bottom:8px;border-bottom:2px solid var(--navy);display:flex;align-items:center;justify-content:space-between}
+.sec-note{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:400;color:var(--ink3)}
+
+/* RESEARCH AREAS */
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.acard{padding:16px 18px;border:1px solid var(--rule);background:var(--surface)}
+.acard.pri{border-top:3px solid var(--pri)}
+.acard.sec{border-top:2px solid #9ab3d0}
+.a-tag{font-size:8.5px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:2px 6px;display:inline-block;margin-bottom:7px}
+.acard.pri .a-tag{color:var(--pri);background:var(--pri-bg)}
+.acard.sec .a-tag{color:var(--sec);background:var(--sec-bg)}
+.a-title{font-family:'Lora',serif;font-size:15px;font-weight:600;line-height:1.3;margin-bottom:5px;color:var(--ink)}
+.a-body{font-size:12.5px;color:var(--ink3);line-height:1.55;margin-bottom:7px}
+.a-themes{list-style:none}
+.a-themes li{font-size:12px;color:var(--ink2);padding:2.5px 0;border-bottom:1px solid var(--rule);display:flex;align-items:flex-start;gap:7px;line-height:1.35}
+.a-themes li::before{content:'';width:3px;height:3px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.acard.pri .a-themes li::before{background:var(--pri)}
+.acard.sec .a-themes li::before{background:var(--sec)}
+
+/* EXPERIENCE */
+.exp-group-lbl{font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:3px 10px;margin-bottom:18px;display:inline-block}
+.exp-group-lbl.g1{color:var(--pri);background:var(--pri-bg);border-left:3px solid var(--pri)}
+.exp-group-lbl.g2{color:var(--sec);background:var(--sec-bg);border-left:3px solid var(--sec)}
+.re{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+.re:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.re-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:2px}
+.re-role{font-size:14.5px;font-weight:600;color:var(--ink)}
+.re-per{font-size:12px;color:var(--ink3);white-space:nowrap;flex-shrink:0}
+.re-org-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.re-org{font-size:13px;color:var(--navy);font-weight:500}
+.uni-logo{height:24px;width:auto;object-fit:contain;flex-shrink:0;opacity:.85}
+.uni-logo-text{font-size:9.5px;font-weight:700;letter-spacing:.04em;color:var(--ink3);background:var(--rule);padding:2px 6px;border-radius:2px}
+.re-ul{list-style:none}
+.re-ul li{font-size:13.5px;color:var(--ink2);line-height:1.75;padding:2.5px 0 2.5px 16px;position:relative}
+.re-ul li::before{content:'';position:absolute;left:4px;top:12px;width:3px;height:3px;border-radius:50%}
+.a1 .re-ul li::before{background:var(--pri)}
+.a2 .re-ul li::before{background:var(--sec)}
+.re-tag{display:inline-flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.rtag{font-size:10.5px;padding:2px 8px;border-left:2px solid}
+.a1 .rtag{color:var(--pri);background:var(--pri-bg);border-left-color:var(--pri)}
+.a2 .rtag{color:var(--sec);background:var(--sec-bg);border-left-color:var(--sec)}
+
+/* PUBLICATIONS */
+.pub-group-lbl{font-size:9.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--ink3);margin-bottom:11px;margin-top:20px;padding-bottom:5px;border-bottom:1px solid var(--rule)}
+.pub-group-lbl:first-child{margin-top:0}
+.pe{display:grid;grid-template-columns:22px 1fr;gap:0 12px;align-items:start;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.pe:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.pn{font-size:12.5px;color:var(--ink3);padding-top:2px}
+.pt{font-size:14px;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:4px}
+.pc{font-size:12.5px;color:var(--ink2);line-height:1.55;margin-bottom:6px}
+.pc em{font-style:italic}
+.pb{display:flex;gap:5px;flex-wrap:wrap}
+.badge{font-size:9.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border:1px solid}
+.bp{border-color:#8b1a1a;color:#8b1a1a;background:var(--pri-bg)}
+.bn{border-color:var(--navy);color:var(--navy);background:var(--sec-bg)}
+.bg{border-color:#2a6b3a;color:#2a6b3a;background:#f2fbf4}
+
+/* PATENT */
+.patent-box{background:var(--bg);border:1px solid var(--rule);padding:13px 16px;margin-top:16px;display:grid;grid-template-columns:18px 1fr;gap:0 12px;align-items:start}
+.patent-t{font-size:13.5px;font-weight:600;margin-bottom:2px}
+.patent-d{font-size:12.5px;color:var(--ink2)}
+
+/* AWARDS */
+.awe{display:grid;grid-template-columns:1fr auto;gap:0 18px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--rule);align-items:baseline}
+.awe:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.awn{font-size:14px;font-weight:600;margin-bottom:1px}
+.awd{font-size:13px;color:var(--ink2)}
+.awy{font-size:12px;color:var(--ink3);white-space:nowrap}
+
+/* EDUCATION */
+.edu{display:grid;grid-template-columns:1fr auto;gap:0 18px;margin-bottom:13px;padding-bottom:13px;border-bottom:1px solid var(--rule);align-items:start}
+.edu:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.edu-row{display:flex;align-items:flex-start;gap:11px}
+.edu-logo{height:30px;width:auto;object-fit:contain;flex-shrink:0;margin-top:2px;opacity:.88}
+.edu-d{font-size:14.5px;font-weight:600;margin-bottom:2px}
+.edu-i{font-size:13px;color:var(--ink2)}
+.edu-g{font-size:12px;color:var(--ink3)}
+.edu-y{font-size:12px;color:var(--ink3);text-align:right;white-space:nowrap}
+
+/* SKILLS */
+.sk-t{width:100%;border-collapse:collapse;font-size:13.5px}
+.sk-t tr{border-bottom:1px solid var(--rule)}
+.sk-t tr:last-child{border-bottom:none}
+.sk-t td{padding:8px 4px;vertical-align:top}
+.sk-t td:first-child{width:145px;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);padding-right:20px;padding-top:10px}
+
+/* SERVICE */
+.sve{display:grid;grid-template-columns:1fr auto;gap:0 18px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--rule);align-items:baseline}
+.sve:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.svr{font-size:14px;font-weight:600;margin-bottom:1px}
+.svo{font-size:13px;color:var(--ink2)}
+.svy{font-size:12px;color:var(--ink3);white-space:nowrap}
+
+/* FOOTER */
+footer{max-width:1000px;margin:0 auto;padding:20px 40px;border-top:1px solid var(--rule);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink3)}
+footer a{color:var(--navy);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
+.rv.on{opacity:1;transform:none}
+
+@media(max-width:740px){
+  .topbar-nav{display:none}
+  .page{grid-template-columns:1fr;padding:26px 20px 60px}
+  .sidebar{position:static;margin-bottom:28px}
+  .agrid{grid-template-columns:1fr}
+  footer{padding:18px 20px;flex-direction:column;gap:5px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-name">Jai Sachin Baskar</span>
+  <nav class="topbar-nav">
+    <a href="#about">About</a>
+    <a href="#areas">Research</a>
+    <a href="#experience">Experience</a>
+    <a href="#publications">Publications</a>
+    <a href="#awards">Awards</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div class="page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="s-name">Jai Sachin<br>Baskar</div>
+    <div class="s-title">Usable Privacy &amp; Security</div>
+    <div class="s-inst" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/SRM_Institute_of_Science_and_Technology_logo.png/100px-SRM_Institute_of_Science_and_Technology_logo.png" alt="SRM" style="height:16px;opacity:.75;object-fit:contain" onerror="this.style.display='none'">
+      <span style="font-size:11px;color:var(--ink3)">SRM IST</span>
+      <span style="color:var(--rule);font-size:10px">·</span>
+      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/69/IIT_Madras_Logo.svg/100px-IIT_Madras_Logo.svg.png" alt="IIT Madras" style="height:16px;opacity:.75;object-fit:contain" onerror="this.style.display='none'">
+      <span style="font-size:11px;color:var(--ink3)">IIT Madras</span>
+      <br style="width:100%">
+      <span style="font-size:11px;color:var(--ink3)">Graduating May 2026</span>
+    </div>
+
+    <hr class="sr">
+    <div class="s-lbl">Contact</div>
+    <div class="s-val"><a href="mailto:jaisachinb05@gmail.com">jaisachinb05@gmail.com</a></div>
+    <div class="s-val">+91 82487 66926</div>
+    <div class="s-val">Chennai, India</div>
+
+    <hr class="sr">
+    <div class="s-lbl">Profiles</div>
+    <ul class="s-links">
+      <li><a href="https://scholar.google.com/citations?user=L_qzpc8AAAAJ&hl=en" target="_blank" rel="noopener">📖&nbsp; Google Scholar</a></li>
+      <li><a href="https://www.linkedin.com/in/jaisachin/" target="_blank" rel="noopener">👤&nbsp; LinkedIn</a></li>
+      <li><a href="https://github.com/jaisachinb" target="_blank" rel="noopener">🐙&nbsp; GitHub</a></li>
+    </ul>
+
+    <hr class="sr">
+    <div class="s-lbl">Research Interests</div>
+    <div class="i-group">
+      <div class="i-tag pri">Primary</div>
+      <ul class="i-list">
+        <li class="p">Usable Privacy &amp; Security</li>
+        <li class="p">Human-Centered Cybersecurity</li>
+        <li class="p">Human–Computer Interaction</li>
+      </ul>
+    </div>
+    <div class="i-group" style="margin-top:9px">
+      <div class="i-tag sec">Secondary</div>
+      <ul class="i-list">
+        <li class="s">Human–AI Interaction</li>
+        <li class="s">Misinformation &amp; Trust</li>
+        <li class="s">LLM Safety</li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main>
+
+    <!-- INCOMING BANNER -->
+    <div class="incoming rv">
+      <div style="font-size:15px;flex-shrink:0;margin-top:2px">🎓</div>
+      <div>
+        <div class="in-label">Incoming &nbsp;·&nbsp; May 2026</div>
+        <div class="in-title">Research Intern, Usable Privacy and Security</div>
+        <div class="in-sub">Indian Institute of Technology Gandhinagar, India</div>
+      </div>
+    </div>
+
+    <!-- STATEMENT -->
+    <div class="stmt rv" id="about">
+      <p>I am Jai, a final-year CS undergraduate at SRM IST (graduating May 2026), with research interests in usable privacy and security, HCI, and human-centered cybersecurity. I have a secondary interest in human-AI interaction, misinformation, and trust and safety of AI systems.</p>
+    </div>
+
+    <!-- EDUCATION -->
+    <section class="sec rv" id="education">
+      <div class="sec-hd">Education</div>
+
+      <div class="edu">
+        <div class="edu-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/6/69/IIT_Madras_Logo.svg/100px-IIT_Madras_Logo.svg.png"
+               alt="IIT Madras" class="edu-logo"
+               onerror="this.style.display='none'">
+          <div>
+            <div class="edu-d">Diploma in Data Science and Applications</div>
+            <div class="edu-i">Indian Institute of Technology Madras</div>
+          </div>
+        </div>
+        <div class="edu-y">May 2023 – Mar 2026</div>
+      </div>
+
+      <div class="edu">
+        <div class="edu-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/SRM_Institute_of_Science_and_Technology_logo.png/100px-SRM_Institute_of_Science_and_Technology_logo.png"
+               alt="SRM IST" class="edu-logo"
+               onerror="this.style.display='none'">
+          <div>
+            <div class="edu-d">B.Tech. in Computer Science and Engineering</div>
+            <div class="edu-i">SRM Institute of Science and Technology, Chennai</div>
+            <div class="edu-g">GPA: 8.51 / 10</div>
+          </div>
+        </div>
+        <div class="edu-y">June 2022 – May 2026</div>
+      </div>
+    </section>
+
+    <!-- RESEARCH AREAS -->
+    <section class="sec rv" id="areas">
+      <div class="sec-hd">Research Areas</div>
+      <div class="agrid">
+
+        <div class="acard pri">
+          <div class="a-tag">Primary</div>
+          <div class="a-title">Usable Privacy &amp; Security</div>
+          <div class="a-body">How people perceive and act on the security and privacy properties of systems, and how design shapes those decisions.</div>
+        </div>
+
+        <div class="acard sec">
+          <div class="a-tag">Secondary</div>
+          <div class="a-title">Human–AI Interaction &amp; Trust</div>
+          <div class="a-body">How AI systems shape human judgment and trust, with a focus on misinformation and LLM safety.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- RESEARCH EXPERIENCE -->
+    <section class="sec rv" id="experience">
+      <div class="sec-hd">Research Experience</div>
+
+      <div class="exp-group-lbl g1">Usable Privacy and Security</div>
+
+      <!-- IIT Gandhinagar (Incoming) -->
+      <div class="re a1">
+        <div class="re-hd">
+          <div class="re-role">Research Intern <span style="font-weight:400;color:var(--ink3);font-size:12.5px">(Incoming)</span></div>
+          <div class="re-per">May 2026</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://iitgn.ac.in/img/iitgn-logo.png"
+               alt="IIT Gandhinagar" class="uni-logo"
+               onerror="this.outerHTML='<span class=uni-logo-text>IITGN</span>'">
+          <div class="re-org">Indian Institute of Technology Gandhinagar, India</div>
+        </div>
+        <div class="re-tag">
+          <span class="rtag">Usable Privacy &amp; Security</span>
+        </div>
+      </div>
+
+      <!-- University of Queensland -->
+      <div class="re a1">
+        <div class="re-hd">
+          <div class="re-role">Research Assistant</div>
+          <div class="re-per">Apr 2025 – Sep 2025</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/a/a0/University_of_Queensland_coat_of_arms.svg/100px-University_of_Queensland_coat_of_arms.svg.png"
+               alt="University of Queensland" class="uni-logo"
+               onerror="this.outerHTML='<span class=uni-logo-text>UQ</span>'">
+          <div class="re-org">The University of Queensland, Australia</div>
+        </div>
+        <ul class="re-ul">
+          <li>Applied the AMC (Awareness, Motivation, Capability) framework to model attacker decision-making against patented IC protection mechanisms, treating adversaries as bounded-rational agents.</li>
+          <li>Showed how hardware design complexity shapes attacker cost-benefit calculus, producing a human-centered behavioral threat model grounded in attacker cognition.</li>
+          <li>Identified design patterns (decoy logic, randomized power signatures) that degrade attacker motivation rather than merely raising technical barriers.</li>
+        </ul>
+        <div class="re-tag">
+          <span class="rtag">Attacker Cognition</span>
+          <span class="rtag">AMC Framework</span>
+          <span class="rtag">Behavioral Threat Modeling</span>
+        </div>
+      </div>
+
+      <!-- IIIT Kottayam -->
+      <div class="re a1">
+        <div class="re-hd">
+          <div class="re-role">Research Intern</div>
+          <div class="re-per">May 2023 – Nov 2023</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://iiitkottayam.ac.in/public/assets/images/logo.png"
+               alt="IIIT Kottayam" class="uni-logo"
+               onerror="this.outerHTML='<span class=uni-logo-text>IIITK</span>'">
+          <div class="re-org">Indian Institute of Information Technology Kottayam, India</div>
+        </div>
+        <ul class="re-ul">
+          <li>Sole-authored a Best Paper Award-winning IEEE publication on a hardware security architecture addressing the trust gap between IC design engineers and semiconductor foundries.</li>
+          <li>Designed a human-in-the-loop notification system (Vitis HLS, C) that alerts engineers of intrusion events in real time, studying practical tradeoffs between automated response and meaningful human control.</li>
+          <li>Prioritized usability for authorized operators while maximizing detection capability; filed a design patent on the resulting architecture (Patent No. 202541088733, 2025).</li>
+        </ul>
+        <div class="re-tag">
+          <span class="rtag">Human-in-the-Loop Security</span>
+          <span class="rtag">Trust in Hardware Systems</span>
+          <span class="rtag">Security Usability</span>
+        </div>
+      </div>
+
+      <div class="exp-group-lbl g2" style="margin-top:10px">Human–AI Interaction and Trust in AI Systems</div>
+
+      <!-- HEC Paris -->
+      <div class="re a2">
+        <div class="re-hd">
+          <div class="re-role">Research Assistant</div>
+          <div class="re-per">Sep 2024 – Dec 2024</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/HEC_Paris_logo.svg/200px-HEC_Paris_logo.svg.png"
+               alt="HEC Paris" class="uni-logo" style="height:18px;"
+               onerror="this.outerHTML='<span class=uni-logo-text>HEC Paris</span>'">
+          <div class="re-org">HEC Paris, France</div>
+        </div>
+        <ul class="re-ul">
+          <li>Built a Python NLP pipeline to extract and codify implicit judgment rules from over 12,000 unstructured commentary entries, outperforming BART on nuanced evaluative language.</li>
+          <li>Conducted qualitative analysis on human-generated commentary to understand narrative patterns and factors influencing complex human decision-making.</li>
+        </ul>
+        <div class="re-tag">
+          <span class="rtag">Human Judgment</span>
+          <span class="rtag">NLP</span>
+          <span class="rtag">Behavioral Data Analysis</span>
+        </div>
+      </div>
+
+      <!-- University of Sydney -->
+      <div class="re a2">
+        <div class="re-hd">
+          <div class="re-role">Research Assistant</div>
+          <div class="re-per">Jan 2024 – Jul 2024</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/59/University_of_Sydney_logo.svg/100px-University_of_Sydney_logo.svg.png"
+               alt="University of Sydney" class="uni-logo"
+               onerror="this.outerHTML='<span class=uni-logo-text>USyd</span>'">
+          <div class="re-org">University of Sydney, Australia</div>
+        </div>
+        <ul class="re-ul">
+          <li>Reviewed literature on AI and blockchain adoption in auditing, examining how automation redistributes accountability between humans and systems.</li>
+          <li>Analyzed how AI integration in financial institutions alters human risk assessment behavior and creates gaps in oversight when automated errors propagate unchecked.</li>
+        </ul>
+        <div class="re-tag">
+          <span class="rtag">Human Trust in AI</span>
+          <span class="rtag">Accountability</span>
+          <span class="rtag">AI Adoption</span>
+        </div>
+      </div>
+
+      <!-- SRM Research Lab -->
+      <div class="re a2">
+        <div class="re-hd">
+          <div class="re-role">Student Researcher</div>
+          <div class="re-per">2023 – 2026</div>
+        </div>
+        <div class="re-org-row">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/c8/SRM_Institute_of_Science_and_Technology_logo.png/100px-SRM_Institute_of_Science_and_Technology_logo.png"
+               alt="SRM" class="uni-logo"
+               onerror="this.outerHTML='<span class=uni-logo-text>SRM</span>'">
+          <div class="re-org">SRM Research Laboratory, Chennai, India</div>
+        </div>
+        <ul class="re-ul">
+          <li><strong>Bachelor's Thesis (IEEE ICOEI 2026):</strong> Deep learning system for automated intracranial hemorrhage detection in emergency CT scans, supporting clinical decision-making under resource constraints.</li>
+          <li><strong>DeepRoadGuard (IEEE ICCDS 2025):</strong> Multimodal driver awareness system using Bayesian fusion and night-vision data to improve situational awareness under low-visibility conditions.</li>
+          <li><strong>Retail Behavior Modeling (arXiv 2024):</strong> Applied data mining and predictive analytics to model consumer decision patterns for retail optimization.</li>
+        </ul>
+        <div class="re-tag">
+          <span class="rtag">Clinical Decision Support</span>
+          <span class="rtag">Situational Awareness</span>
+          <span class="rtag">Consumer Behavior</span>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section class="sec rv" id="publications">
+      <div class="sec-hd">Publications <span class="sec-note">* sole author</span></div>
+
+      <div class="pub-group-lbl">Usable Security and Privacy</div>
+      <div class="pe">
+        <div class="pn">1.</div>
+        <div>
+          <div class="pt">Enhancing Security in Logic-Locked Systems through UART-Based Key Authentication *</div>
+          <div class="pc"><strong>Jaisachin B.</strong> <em>Proc. IEEE International Conference on Computing, Communication and Intelligent Technologies (ICCCIT)</em>, pp. 649–653, 2025.</div>
+          <div class="pb"><span class="badge bp">Best Paper Award</span><span class="badge bn">Sole Author</span></div>
+        </div>
+      </div>
+
+      <div class="pub-group-lbl">Applied Systems and Human-AI</div>
+      <div class="pe">
+        <div class="pn">2.</div>
+        <div>
+          <div class="pt">Computationally Efficient Deep Learning for Automated Intracranial Hemorrhage Detection in Emergency CT Scans</div>
+          <div class="pc"><strong>Jaisachin B.</strong> <em>Proc. IEEE 9th International Conference on Trends in Electronics and Informatics (ICOEI)</em>, 2026.</div>
+          <div class="pb"><span class="badge bg">Bachelor's Thesis</span></div>
+        </div>
+      </div>
+      <div class="pe">
+        <div class="pn">3.</div>
+        <div>
+          <div class="pt">DeepRoadGuard: Enhanced Pothole Detection Using Bayesian Fusion and Night-Vision Data</div>
+          <div class="pc">Akshay G.N., <strong>Jaisachin B.</strong> <em>Proc. IEEE International Conference on Computational Intelligence and Data Science (ICCDS)</em>, 2025.</div>
+        </div>
+      </div>
+      <div class="pe">
+        <div class="pn">4.</div>
+        <div>
+          <div class="pt">Integrating Data Mining and Predictive Modeling Techniques for Enhanced Retail Optimization</div>
+          <div class="pc">Sri Darshan M., <strong>Jaisachin B.</strong> <em>arXiv preprint</em> arXiv:2409.19248, 2024.</div>
+          <div class="pb"><span class="badge bp">Runner-Up Best Paper</span></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px">
+        <div style="font-size:9.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px;padding-bottom:5px;border-bottom:1px solid var(--rule)">Patent</div>
+        <div class="patent-box">
+          <div style="font-size:13px;color:var(--ink3);padding-top:2px">⚙</div>
+          <div>
+            <div class="patent-t">UART-Based Key Authentication in a Logic-Locked System</div>
+            <div class="patent-d">Jaisachin B. &nbsp;·&nbsp; Patent No. 202541088733 &nbsp;·&nbsp; Filed 2025, India</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AWARDS -->
+    <section class="sec rv" id="awards">
+      <div class="sec-hd">Honors and Awards</div>
+      <div class="awe"><div><div class="awn">Indian Delegate, HPAIR Conference</div><div class="awd">Harvard Project for Asian and International Relations</div></div><div class="awy">2025</div></div>
+      <div class="awe"><div><div class="awn">Best Research Paper Award</div><div class="awd">Preventing IP Theft in Integrated Circuits &nbsp;·&nbsp; IEEE ICCCIT</div></div><div class="awy">2024</div></div>
+      <div class="awe"><div><div class="awn">Best Research Paper, Runner-Up</div><div class="awd">Data Mining and Predictive Modeling for Retail Optimization</div></div><div class="awy">2024</div></div>
+      <div class="awe"><div><div class="awn">2nd Prize, Machine Learning Hackathon</div><div class="awd">Epoch, SRM University</div></div><div class="awy">2023</div></div>
+      <div class="awe"><div><div class="awn">Gold Medalist, Computer Science Olympiad</div></div><div class="awy">2018</div></div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="sec rv" id="skills">
+      <div class="sec-hd">Technical Skills</div>
+      <table class="sk-t">
+        <tr><td>HCI &amp; AI</td><td>Human–Computer Interaction, Behavioral Data Analysis, Data Mining, Machine Learning, NLP, Bayesian Fusion</td></tr>
+        <tr><td>Programming</td><td>Python (NumPy, Pandas, Matplotlib), C, SQL, Power BI</td></tr>
+        <tr><td>Hardware Security</td><td>Logic Locking, IC Security, Reverse Engineering, Vitis HLS, Vivado HLS, IP Design</td></tr>
+        <tr><td>Languages</td><td>English, Hindi, Tamil (native), Malayalam (novice)</td></tr>
+      </table>
+    </section>
+
+    <!-- SERVICE -->
+    <section class="sec rv" id="service">
+      <div class="sec-hd">Service and Leadership</div>
+      <div class="sve"><div><div class="svr">Reviewer</div><div class="svo">IEEE Contemporary Computing Innovations Conference (CCIC) 2026</div></div><div class="svy">2026</div></div>
+      <div class="sve"><div><div class="svr">Student Member</div><div class="svo">IEEE &amp; IEEE Electron Devices Society</div></div><div class="svy">Active</div></div>
+      <div class="sve"><div><div class="svr">Research &amp; Development Lead</div><div class="svo">Cyborg Club, SRM Institute of Science and Technology</div></div><div class="svy">2023–2025</div></div>
+      <div class="sve"><div><div class="svr">Member, Ramanujam Society of Research</div><div class="svo">Indian Institute of Technology Madras</div></div><div class="svy">2023–2025</div></div>
+      <div class="sve"><div><div class="svr">Public Relations Lead, Dhyan Chand Sports Club</div><div class="svo">Indian Institute of Technology Madras</div></div><div class="svy">2023–2024</div></div>
+      <div class="sve"><div><div class="svr">Volunteer Social Science Teacher</div><div class="svo">Bihar, India</div></div><div class="svy">2024</div></div>
+      <div class="sve"><div><div class="svr">Student Volunteer, National Service Scheme</div></div><div class="svy">2023</div></div>
+    </section>
+
+  </main>
+</div>
+
+<footer id="contact">
+  <span>Jai Sachin Baskar &nbsp;·&nbsp; <a href="mailto:jaisachinb05@gmail.com">jaisachinb05@gmail.com</a> &nbsp;·&nbsp; +91 82487 66926</span>
+  <span>Last updated April 2026</span>
+</footer>
+
+<script>
+const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');obs.unobserve(x.target)}}),{threshold:.06});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i*.05)+'s';obs.observe(el)});
+</script>
+</body>
+</html>
