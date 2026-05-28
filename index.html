@@ -524,817 +524,108 @@ $(document).ready(function() {
 
 </body>
 </html>
-
-<!-- ============================================================
-     USABLE SECURITY ADD-ONS , injected before </body>
-     ============================================================ -->
-
 <style>
-/* ── Global overlay backdrop ── */
-.usec-overlay {
-  display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);
-  z-index:9998;align-items:center;justify-content:center;
-  backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);
+#usec-tooltip {
+  display:none;position:fixed;z-index:9999;
+  background:#fff;border-radius:10px;padding:16px 18px;
+  max-width:300px;width:88vw;
+  box-shadow:0 8px 32px rgba(0,0,0,.15);
+  border-top:3px solid #33006f;
+  font-family:'Raleway',sans-serif;
+  animation:usec-fade .2s ease both;
 }
-.usec-overlay.active { display:flex; }
-
-/* ── Modal card ── */
-.usec-modal {
-  background:#fff;border-radius:16px;padding:32px 28px 24px;
-  max-width:400px;width:90%;position:relative;
-  box-shadow:0 24px 64px rgba(0,0,0,.22);
-  animation:usec-pop .28s cubic-bezier(.34,1.56,.64,1) both;
-}
-@keyframes usec-pop {
-  from { opacity:0; transform:scale(.82) translateY(18px); }
-  to   { opacity:1; transform:scale(1) translateY(0); }
-}
-.usec-modal-close {
-  position:absolute;top:12px;right:14px;background:none;border:none;
-  font-size:20px;cursor:pointer;color:#999;line-height:1;
-  transition:color .2s;
-}
-.usec-modal-close:hover { color:#333; }
-
-/* ── Duck canvas ── */
-.usec-duck-wrap { text-align:center;margin-bottom:16px; }
-.usec-duck-wrap canvas { width:110px;height:110px; }
-
-/* ── Modal text ── */
-.usec-modal h3 {
-  font-family:'Raleway',sans-serif;font-size:1.25em;font-weight:700;
-  margin:0 0 6px;color:#1a1a2e;
-}
-.usec-modal .usec-subtitle {
-  font-size:.78em;text-transform:uppercase;letter-spacing:.12em;
-  color:#33006f;font-weight:700;margin-bottom:10px;
-}
-.usec-modal p {
-  font-size:.88em;line-height:1.6;color:#444;margin:0 0 14px;
-}
-.usec-modal .usec-fact {
-  background:#f5f0ff;border-left:4px solid #33006f;
-  border-radius:4px;padding:10px 14px;font-size:.82em;
-  color:#2d2d2d;line-height:1.55;
-}
-.usec-modal .usec-src {
-  font-size:.72em;color:#999;margin-top:10px;text-align:right;
-}
-
-/* ── Privacy Pulse ── */
-#usec-pulse-btn {
-  position:fixed;bottom:28px;right:28px;z-index:9990;
-  width:52px;height:52px;border-radius:50%;
-  background:#1a1a2e;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(0,0,0,.35);
-  transition:transform .2s;
-}
-#usec-pulse-btn:hover { transform:scale(1.12); }
-#usec-pulse-btn svg { width:26px;height:26px; }
-
-/* Pulse ring */
-#usec-pulse-btn::before {
-  content:'';position:absolute;inset:-6px;border-radius:50%;
-  border:2px solid rgba(51,0,111,.5);
-  animation:usec-ring 1.8s ease-out infinite;
-}
-@keyframes usec-ring {
-  0%   { transform:scale(1);   opacity:.7; }
-  70%  { transform:scale(1.35);opacity:0; }
-  100% { transform:scale(1);   opacity:0; }
-}
-
-/* ── Wagon Wheel ── */
-#usec-wheel-btn {
-  position:fixed;bottom:90px;right:28px;z-index:9990;
-  width:52px;height:52px;border-radius:50%;
-  background:#33006f;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:0 4px 18px rgba(0,0,0,.35);
-  transition:transform .2s;
-}
-#usec-wheel-btn:hover { transform:scale(1.12); }
-#usec-wheel-btn svg { width:26px;height:26px; }
-
-.usec-wheel-overlay {
-  display:none;position:fixed;inset:0;z-index:9995;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,.62);backdrop-filter:blur(4px);
-}
-.usec-wheel-overlay.active { display:flex; }
-
-.usec-wheel-container {
-  position:relative;width:440px;height:440px;
-  animation:usec-wheel-in .4s cubic-bezier(.34,1.4,.64,1) both;
-}
-@keyframes usec-wheel-in {
-  from { opacity:0; transform:scale(.4) rotate(-90deg); }
-  to   { opacity:1; transform:scale(1) rotate(0deg); }
-}
-.usec-wheel-container.closing {
-  animation:usec-wheel-out .3s ease-in forwards;
-}
-@keyframes usec-wheel-out {
-  to { opacity:0; transform:scale(.4) rotate(90deg); }
-}
-
-.usec-spoke {
-  position:absolute;top:50%;left:50%;
-  width:170px;height:58px;margin-top:-29px;
-  transform-origin:0 50%;
-  cursor:pointer;
-}
-.usec-spoke-inner {
-  position:absolute;right:0;top:4px;bottom:4px;left:20px;
-  background:#1a1a2e;border-radius:8px;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:0 10px;
-  box-shadow:0 4px 14px rgba(0,0,0,.4);
-  transition:background .2s,transform .18s;
-}
-.usec-spoke:hover .usec-spoke-inner {
-  background:#33006f;transform:scaleX(1.06);
-}
-.usec-spoke-icon { font-size:18px;line-height:1; }
-.usec-spoke-label {
-  font-size:10px;font-weight:700;letter-spacing:.05em;
-  color:#eee;text-align:center;line-height:1.25;margin-top:3px;
-  font-family:'Raleway',sans-serif;text-transform:uppercase;
-}
-
-/* hub */
-.usec-wheel-hub {
-  position:absolute;top:50%;left:50%;
-  width:64px;height:64px;margin:-32px 0 0 -32px;
-  background:#fff;border-radius:50%;
-  box-shadow:0 0 0 4px #33006f,0 6px 20px rgba(0,0,0,.5);
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;cursor:pointer;z-index:2;
-  transition:transform .2s;
-}
-.usec-wheel-hub:hover { transform:scale(1.12); }
-
-/* ── Wheel detail panel ── */
-.usec-wheel-detail {
-  display:none;position:fixed;inset:0;z-index:9996;
-  align-items:center;justify-content:center;
-}
-.usec-wheel-detail.active { display:flex; }
-
-/* ── Pulse panel (EKG) ── */
-.usec-pulse-panel {
-  display:none;position:fixed;inset:0;z-index:9997;
-  align-items:center;justify-content:center;
-  background:rgba(0,0,0,.65);backdrop-filter:blur(4px);
-}
-.usec-pulse-panel.active { display:flex; }
-
-.usec-pulse-card {
-  background:#0d0d1a;border-radius:16px;padding:28px 26px 22px;
-  max-width:460px;width:92%;
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
-  border:1px solid #33006f;
-  animation:usec-pop .3s cubic-bezier(.34,1.56,.64,1) both;
-}
-.usec-pulse-card h3 {
-  font-family:'Raleway',sans-serif;font-size:1.1em;font-weight:700;
-  color:#fff;margin:0 0 4px;
-}
-.usec-pulse-card .usec-subtitle { color:#8b5cf6;margin-bottom:14px; }
-.usec-pulse-ekg {
-  width:100%;height:70px;margin:0 0 16px;
-}
-.usec-pulse-tip {
-  background:#161630;border-radius:8px;padding:12px 14px;
-  font-size:.83em;color:#ccc;line-height:1.6;
-  border-left:3px solid #8b5cf6;
-}
-.usec-pulse-nav {
-  display:flex;gap:8px;margin-top:14px;justify-content:flex-end;
-}
-.usec-pulse-nav button {
-  background:none;border:1px solid #33006f;color:#ccc;
-  padding:5px 14px;border-radius:20px;cursor:pointer;
-  font-size:.8em;font-family:'Raleway',sans-serif;
-  transition:background .2s,color .2s;
-}
-.usec-pulse-nav button:hover { background:#33006f;color:#fff; }
-.usec-pulse-close {
-  position:absolute;top:12px;right:14px;background:none;border:none;
-  font-size:20px;cursor:pointer;color:#888;
-}
-.usec-pulse-card { position:relative; }
+@keyframes usec-fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+#usec-tooltip .ut-tag{font-size:.68em;text-transform:uppercase;letter-spacing:.1em;color:#33006f;font-weight:700;margin-bottom:5px;}
+#usec-tooltip .ut-title{font-size:.9em;font-weight:700;color:#1a1a2e;margin-bottom:6px;}
+#usec-tooltip .ut-body{font-size:.78em;color:#444;line-height:1.55;margin-bottom:8px;}
+#usec-tooltip .ut-cite{font-size:.68em;color:#999;border-top:1px solid #f0f0f0;padding-top:6px;}
+#usec-tooltip .ut-redirect{font-size:.72em;color:#33006f;margin-top:6px;font-style:italic;}
 </style>
 
-<!-- ── Icon interceptor overlay ── -->
-<div class="usec-overlay" id="usecOverlay">
-  <div class="usec-modal" id="usecModal">
-    <button class="usec-modal-close" id="usecModalClose">✕</button>
-    <div class="usec-duck-wrap"><canvas id="usecDuckCanvas" width="220" height="220"></canvas></div>
-    <div class="usec-subtitle" id="usecSubtitle"></div>
-    <h3 id="usecTitle"></h3>
-    <p id="usecDesc"></p>
-    <div class="usec-fact" id="usecFact"></div>
-    <div class="usec-src" id="usecSrc"></div>
-  </div>
-</div>
-
-<!-- ── Privacy Pulse button ── -->
-<button id="usec-pulse-btn" title="Privacy Pulse">
-  <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="2,12 6,12 8,4 10,20 12,10 14,16 16,12 22,12"/>
-  </svg>
-</button>
-
-<!-- ── Wagon Wheel button ── -->
-<button id="usec-wheel-btn" title="Security Wheel">
-  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
-    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
-    <line x1="12" y1="2" x2="12" y2="9"/><line x1="12" y1="15" x2="12" y2="22"/>
-    <line x1="2" y1="12" x2="9" y2="12"/><line x1="15" y1="12" x2="22" y2="12"/>
-    <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/>
-    <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/>
-    <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/>
-    <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/>
-  </svg>
-</button>
-
-<!-- ── Wagon Wheel overlay ── -->
-<div class="usec-wheel-overlay" id="usecWheelOverlay">
-  <div class="usec-wheel-container" id="usecWheelContainer">
-    <!-- spokes inserted by JS -->
-    <div class="usec-wheel-hub" id="usecWheelHub">🔐</div>
-  </div>
-</div>
-
-<!-- ── Wagon Wheel detail modal ── -->
-<div class="usec-wheel-detail" id="usecWheelDetail">
-  <div class="usec-modal" style="max-width:420px;">
-    <button class="usec-modal-close" id="usecWheelDetailClose">✕</button>
-    <div class="usec-duck-wrap" style="font-size:44px;margin-bottom:10px;" id="usecWheelIcon"></div>
-    <div class="usec-subtitle" id="usecWheelSubtitle"></div>
-    <h3 id="usecWheelTitle"></h3>
-    <p id="usecWheelDesc"></p>
-    <div class="usec-fact" id="usecWheelFact"></div>
-  </div>
-</div>
-
-<!-- ── Privacy Pulse panel ── -->
-<div class="usec-pulse-panel" id="usecPulsePanel">
-  <div class="usec-pulse-card">
-    <button class="usec-pulse-close" id="usecPulseClose">✕</button>
-    <div class="usec-subtitle">Privacy Pulse · Vital Signs Monitor</div>
-    <h3 id="usecPulseTipTitle"></h3>
-    <canvas class="usec-pulse-ekg" id="usecEKG" width="420" height="70"></canvas>
-    <div class="usec-pulse-tip" id="usecPulseTipBody"></div>
-    <div class="usec-pulse-nav">
-      <button id="usecPulsePrev">← Prev</button>
-      <span style="color:#555;line-height:2;font-size:.8em" id="usecPulseCount"></span>
-      <button id="usecPulseNext">Next →</button>
-    </div>
-  </div>
+<div id="usec-tooltip">
+  <div class="ut-tag" id="ut-tag"></div>
+  <div class="ut-title" id="ut-title"></div>
+  <div class="ut-body" id="ut-body"></div>
+  <div class="ut-cite" id="ut-cite"></div>
+  <div class="ut-redirect" id="ut-redirect"></div>
 </div>
 
 <script>
 (function(){
-"use strict";
-
-/* =====================================================
-   1. DUCK PAINTER (animated SVG-style on canvas)
-   ===================================================== */
-function drawDuck(canvas, theme){
-  const ctx = canvas.getContext('2d');
-  let frame = 0;
-  const W = canvas.width, H = canvas.height;
-  const palette = {
-    email:    { body:'#FFD700', beak:'#FF8C00', eye:'#1a1a2e', water:'#4fc3f7' },
-    scholar:  { body:'#90EE90', beak:'#228B22', eye:'#1a1a2e', water:'#a5d6a7' },
-    linkedin: { body:'#87CEEB', beak:'#0077B5', eye:'#1a1a2e', water:'#b3e5fc' },
-    github:   { body:'#D3D3D3', beak:'#555',    eye:'#1a1a2e', water:'#cfd8dc' },
+  const DATA = {
+    email: {
+      tag:'Threat: Phishing',
+      title:'Email is the #1 attack vector',
+      body:'91% of cyberattacks begin with a phishing email. Attackers exploit authority bias and urgency to bypass rational decision-making, even in security-aware individuals.',
+      cite:'Vishwanath et al. (2011), Decision Support Systems; Verizon DBIR 2023',
+      redirect:null
+    },
+    scholar: {
+      tag:'Research Integrity',
+      title:'Citation manipulation is a growing concern',
+      body:'Predatory journals, fake peer reviews, and citation rings distort the academic record. AI-generated papers have accelerated this, making provenance verification a research priority.',
+      cite:'Nature (2023) "The fight against fake science"; ACM FAccT',
+      redirect:'Opening Google Scholar...'
+    },
+    linkedin: {
+      tag:'Threat: Social Engineering',
+      title:'Professional networks enable spear-phishing',
+      body:'Attackers harvest job titles, relationships, and org structures from LinkedIn to craft highly targeted messages. The "foot-in-the-door" technique exploits professional norms of reciprocity.',
+      cite:'Workman (2007), Security Management Science; Cialdini (2001)',
+      redirect:'Opening LinkedIn...'
+    },
+    github: {
+      tag:'Threat: Credential Exposure',
+      title:'Secrets leaked in code cost millions',
+      body:'Automated scanners find exposed API keys within seconds of a push. Root cause is rarely negligence — it is the absence of secure defaults in developer tooling.',
+      cite:'Sasse et al. (2001); GitGuardian State of Secrets Sprawl 2023',
+      redirect:'Opening GitHub...'
+    }
   };
-  const c = palette[theme] || palette.email;
 
-  function render(){
-    ctx.clearRect(0,0,W,H);
-    const t = frame * 0.07;
-    const bobY = Math.sin(t) * 5;
-    const tiltA = Math.sin(t*1.1) * 0.12;
+  const tip = document.getElementById('usec-tooltip');
+  let hideTimer = null;
 
-    ctx.save();
-    ctx.translate(W/2, H/2 + bobY);
-    ctx.rotate(tiltA);
+  function showTip(key, anchor) {
+    const d = DATA[key];
+    document.getElementById('ut-tag').textContent   = d.tag;
+    document.getElementById('ut-title').textContent = d.title;
+    document.getElementById('ut-body').textContent  = d.body;
+    document.getElementById('ut-cite').textContent  = d.cite;
+    document.getElementById('ut-redirect').textContent = d.redirect || '';
 
-    // water ripple
-    ctx.beginPath();
-    for(let x=0;x<=W;x+=2){
-      const y = Math.sin(x*0.06 + t*2) * 4 + 38;
-      x===0 ? ctx.moveTo(x-W/2,y) : ctx.lineTo(x-W/2,y);
-    }
-    ctx.lineTo(W/2, 60); ctx.lineTo(-W/2, 60);
-    ctx.closePath();
-    ctx.fillStyle = c.water+'aa';
-    ctx.fill();
+    // position near anchor
+    const r = anchor.getBoundingClientRect();
+    tip.style.display = 'block';
+    const left = Math.min(r.left, window.innerWidth - 318);
+    const top  = r.bottom + 10 + window.scrollY;
+    tip.style.left = Math.max(8, left) + 'px';
+    tip.style.top  = top + 'px';
 
-    // body
-    ctx.beginPath();
-    ctx.ellipse(0, 10, 38, 28, 0, 0, Math.PI*2);
-    ctx.fillStyle = c.body;
-    ctx.fill();
-    ctx.strokeStyle = '#0005';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    // wing flap
-    const wingA = Math.sin(t*1.8)*0.25;
-    ctx.save();
-    ctx.rotate(wingA);
-    ctx.beginPath();
-    ctx.ellipse(12, 14, 18, 10, 0.3, 0, Math.PI*2);
-    ctx.fillStyle = c.body+'cc';
-    ctx.fill();
-    ctx.restore();
-
-    // head
-    ctx.beginPath();
-    ctx.arc(-18, -14, 18, 0, Math.PI*2);
-    ctx.fillStyle = c.body;
-    ctx.fill();
-    ctx.stroke();
-
-    // beak
-    ctx.beginPath();
-    ctx.moveTo(-34, -14);
-    ctx.lineTo(-44, -10 + Math.sin(t*3)*2);
-    ctx.lineTo(-36, -6);
-    ctx.closePath();
-    ctx.fillStyle = c.beak;
-    ctx.fill();
-
-    // eye
-    ctx.beginPath();
-    ctx.arc(-22, -20, 4, 0, Math.PI*2);
-    ctx.fillStyle = c.eye;
-    ctx.fill();
-    ctx.beginPath();
-    ctx.arc(-21, -21, 1.2, 0, Math.PI*2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-
-    ctx.restore();
-    frame++;
-    return requestAnimationFrame(render);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => { tip.style.display='none'; }, 3500);
   }
-  const raf = render();
-  return () => cancelAnimationFrame(raf);
-}
 
-/* =====================================================
-   2. ICON POPUP DATA
-   ===================================================== */
-const POPUP_DATA = {
-  email: {
-    theme: 'email',
-    subtitle: 'Threat: Email-Based Attacks',
-    title: 'Phishing & Social Engineering',
-    desc: 'Email remains the #1 vector for cyberattacks. Attackers craft convincing messages that exploit cognitive biases, urgency, authority, and familiarity, to deceive even security-aware individuals.',
-    fact: '📌 Research finding: 91% of all cyberattacks begin with a phishing email. Human decision-making under time pressure dramatically increases susceptibility (Vishwanath et al., 2011, Decision Support Systems).',
-    src: '→ See: Cranor (2008) "A Framework for Reasoning About the Human in the Loop" · SOUPS'
-  },
-  scholar: {
-    theme: 'scholar',
-    subtitle: 'Threat: Academic Identity & Integrity',
-    title: 'Citation Manipulation & Research Fraud',
-    desc: 'Scholar profiles are targets for citation gaming and impersonation. Fake papers, predatory journals, and identity spoofing undermine research integrity, a growing concern in the age of AI-generated content.',
-    fact: '📌 Cognitive bias alert: Researchers exhibit "authority bias", papers from prestigious institutions are trusted without sufficient scrutiny of methodology (Kahneman, 2011).',
-    src: '→ Ref: ACM FAccT · Nature "How predatory journals are ruining science"'
-  },
-  linkedin: {
-    theme: 'linkedin',
-    subtitle: 'Threat: Professional Network Exploitation',
-    title: 'Social Engineering via LinkedIn',
-    desc: 'Professional networks are prime hunting grounds for spear-phishing, corporate espionage, and credential harvesting. Attackers build trust incrementally before launching targeted attacks.',
-    fact: '📌 The "foot-in-the-door" technique, a social psychology principle, is routinely operationalised by attackers who establish rapport through small requests before escalating to malicious asks.',
-    src: '→ Ref: Cialdini (2001) "Influence" · Workman (2007) Security Management Science'
-  },
-  github: {
-    theme: 'github',
-    subtitle: 'Threat: Code Repository Exposure',
-    title: 'Credential Leaks in Source Code',
-    desc: 'Developers routinely commit API keys, tokens, and passwords to public repositories. Automated bots scan GitHub continuously, leaked credentials are exploited within minutes of exposure.',
-    fact: '📌 Usable security insight: Developers bypass security controls not from negligence, but because secure defaults are absent. Design that makes the secure choice the easy choice reduces leakage (Sasse et al., 2001).',
-    src: '→ Ref: Gibler et al. · IEEE S&P · "GitRob" credential scanner research'
+  function intercept(selector, key) {
+    document.querySelectorAll(selector).forEach(el => {
+      el.addEventListener('click', function(e) {
+        e.preventDefault();
+        showTip(key, this);
+        if(this.href && this.href !== '#' && !this.href.startsWith('mailto')) {
+          const url = this.href;
+          setTimeout(() => { window.open(url, '_blank'); tip.style.display='none'; }, 2000);
+        }
+      });
+    });
   }
-};
 
-/* =====================================================
-   3. INTERCEPT ICON CLICKS
-   ===================================================== */
-let cancelDuck = null;
+  intercept('a[href^="mailto:"]',              'email');
+  intercept('a[href*="scholar.google"]',        'scholar');
+  intercept('a[href*="linkedin.com"]',          'linkedin');
+  intercept('a[href*="github.com"]',            'github');
 
-function openPopup(key){
-  const d = POPUP_DATA[key];
-  if(!d) return;
-  document.getElementById('usecSubtitle').textContent = d.subtitle;
-  document.getElementById('usecTitle').textContent    = d.title;
-  document.getElementById('usecDesc').textContent     = d.desc;
-  document.getElementById('usecFact').textContent     = d.fact;
-  document.getElementById('usecSrc').textContent      = d.src;
-  if(cancelDuck) cancelDuck();
-  const canvas = document.getElementById('usecDuckCanvas');
-  cancelDuck = drawDuck(canvas, d.theme);
-  document.getElementById('usecOverlay').classList.add('active');
-}
-
-function closePopup(){
-  document.getElementById('usecOverlay').classList.remove('active');
-  if(cancelDuck){ cancelDuck(); cancelDuck=null; }
-}
-document.getElementById('usecModalClose').addEventListener('click', closePopup);
-document.getElementById('usecOverlay').addEventListener('click', function(e){
-  if(e.target===this) closePopup();
-});
-
-// Attach to all icon-bearing anchors in the header area
-document.querySelectorAll('a[title="Email"], a[href^="mailto:"]').forEach(el=>{
-  el.addEventListener('click', function(e){
-    e.preventDefault(); openPopup('email');
+  document.addEventListener('click', e => {
+    if(!tip.contains(e.target)) tip.style.display='none';
   });
-});
-document.querySelectorAll('a[title="Google Scholar"], a[href*="scholar.google"]').forEach(el=>{
-  el.addEventListener('click', function(e){
-    e.preventDefault();
-    openPopup('scholar');
-    setTimeout(()=>{ window.open(el.href,'_blank'); }, 2200);
-  });
-});
-document.querySelectorAll('a[title="LinkedIn"], a[href*="linkedin.com"]').forEach(el=>{
-  el.addEventListener('click', function(e){
-    e.preventDefault();
-    openPopup('linkedin');
-    setTimeout(()=>{ window.open(el.href,'_blank'); }, 2200);
-  });
-});
-document.querySelectorAll('a[title="GitHub"], a[href*="github.com"]').forEach(el=>{
-  el.addEventListener('click', function(e){
-    e.preventDefault();
-    openPopup('github');
-    setTimeout(()=>{ window.open(el.href,'_blank'); }, 2200);
-  });
-});
-
-/* =====================================================
-   4. WAGON WHEEL
-   ===================================================== */
-const SPOKES = [
-  { icon:'🔒', label:'Zero Trust',        subtitle:'Architecture Principle',
-    title:'Never Trust, Always Verify',
-    desc:'Zero Trust eliminates implicit trust in any entity inside or outside the perimeter. Every access request is verified as though it originates from an untrusted network.',
-    fact:'📌 NIST SP 800-207 formalises Zero Trust Architecture. Gartner predicts 60% of enterprises will adopt it by 2025.' },
-  { icon:'🧠', label:'Threat Modelling',  subtitle:'Risk Analysis Method',
-    title:'Structured Adversarial Thinking',
-    desc:'Threat modelling systematically identifies assets, threats, and countermeasures. STRIDE and PASTA are widely used frameworks for enumerating attack surfaces.',
-    fact:'📌 Usability research shows that simplified threat modelling tools (e.g., threat dragon) increase adoption among non-security developers by 3×.' },
-  { icon:'🎯', label:'Privacy by Design', subtitle:'Engineering Principle',
-    title:'Embed Privacy from the Start',
-    desc:'Privacy by Design (PbD), codified by Ann Cavoukian, mandates privacy as the default setting, not an afterthought. GDPR Article 25 legally requires it.',
-    fact:'📌 Data minimisation, collecting only what is necessary, is the cornerstone of PbD and reduces attack surface while respecting user autonomy.' },
-  { icon:'🔑', label:'MFA',               subtitle:'Authentication Control',
-    title:'Multi-Factor Authentication',
-    desc:'MFA reduces account compromise by over 99% (Microsoft, 2019). Yet usability friction remains a barrier to adoption, a classic security-usability tension.',
-    fact:'📌 Research: Push-notification MFA introduces "MFA fatigue" attacks (adversary-in-the-middle). Phishing-resistant FIDO2/passkeys address this.' },
-  { icon:'📉', label:'Data Minimisation', subtitle:'Privacy Engineering',
-    title:'Collect Only What You Need',
-    desc:'Data minimisation limits the scope of potential breaches. It is both an ethical principle and a legal obligation under GDPR, CCPA, and ISO 29101.',
-    fact:'📌 Cognitive load research: Users accept broader data collection when interfaces obscure scope. Transparent affordances empower informed consent.' },
-  { icon:'⚠️', label:'Cognitive Bias',    subtitle:'Usable Security Research',
-    title:'Human Factors in Security Failures',
-    desc:'Security failures are often attributed to "human error", but this ignores how interface design, cognitive load, and biases shape decisions. Usable security reframes the problem.',
-    fact:'📌 Authority bias, urgency framing, and social proof are routinely weaponised in phishing. Designing for human cognition, not against it, is the research frontier.' },
-  { icon:'🛡️', label:'Open Redirect',     subtitle:'Web Vulnerability',
-    title:'URL Redirect Attacks',
-    desc:'Open redirect vulnerabilities allow attackers to craft legitimate-looking URLs that redirect victims to malicious sites. Often overlooked in security audits.',
-    fact:'📌 OWASP lists open redirects as an "Unvalidated Redirects and Forwards" vulnerability. Used extensively in phishing campaigns to bypass email filters.' },
-  { icon:'🔍', label:'Audit Logging',     subtitle:'Accountability Control',
-    title:'Logs as Security Evidence',
-    desc:'Comprehensive audit logging enables forensic investigation, anomaly detection, and regulatory compliance. Logs are the "flight recorder" of a security incident.',
-    fact:'📌 NIST SP 800-92 provides guidance on log management. Immutable, centralised logging (SIEM) is essential for detecting advanced persistent threats (APTs).' },
-];
-
-const N = SPOKES.length;
-const container = document.getElementById('usecWheelContainer');
-
-SPOKES.forEach((s, i) => {
-  const angle = (i / N) * 360;
-  const spoke = document.createElement('div');
-  spoke.className = 'usec-spoke';
-  spoke.style.transform = `rotate(${angle}deg)`;
-  spoke.innerHTML = `<div class="usec-spoke-inner">
-    <span class="usec-spoke-icon">${s.icon}</span>
-    <span class="usec-spoke-label">${s.label}</span>
-  </div>`;
-  spoke.addEventListener('click', ()=>openWheelDetail(i));
-  container.appendChild(spoke);
-});
-
-function openWheelDetail(i){
-  const s = SPOKES[i];
-  document.getElementById('usecWheelIcon').textContent     = s.icon;
-  document.getElementById('usecWheelSubtitle').textContent = s.subtitle;
-  document.getElementById('usecWheelTitle').textContent    = s.title;
-  document.getElementById('usecWheelDesc').textContent     = s.desc;
-  document.getElementById('usecWheelFact').textContent     = s.fact;
-  document.getElementById('usecWheelDetail').classList.add('active');
-}
-
-document.getElementById('usecWheelDetailClose').addEventListener('click', ()=>{
-  document.getElementById('usecWheelDetail').classList.remove('active');
-});
-
-// Open/close wheel
-document.getElementById('usec-wheel-btn').addEventListener('click', ()=>{
-  const ov = document.getElementById('usecWheelOverlay');
-  if(ov.classList.contains('active')){
-    const wc = document.getElementById('usecWheelContainer');
-    wc.classList.add('closing');
-    setTimeout(()=>{ ov.classList.remove('active'); wc.classList.remove('closing'); }, 280);
-  } else {
-    ov.classList.add('active');
-  }
-});
-document.getElementById('usecWheelHub').addEventListener('click', ()=>{
-  const wc = document.getElementById('usecWheelContainer');
-  wc.classList.add('closing');
-  setTimeout(()=>{
-    document.getElementById('usecWheelOverlay').classList.remove('active');
-    wc.classList.remove('closing');
-  }, 280);
-});
-document.getElementById('usecWheelOverlay').addEventListener('click', function(e){
-  if(e.target===this){
-    const wc = document.getElementById('usecWheelContainer');
-    wc.classList.add('closing');
-    setTimeout(()=>{ this.classList.remove('active'); wc.classList.remove('closing'); },280);
-  }
-});
-
-/* =====================================================
-   5. PRIVACY PULSE (EKG heartbeat)
-   ===================================================== */
-const PULSE_TIPS = [
-  { title:'🩺 Vital: Password Hygiene',
-    body:'Reusing passwords is the #1 cause of credential stuffing attacks. A breach of one service exposes all others sharing that password. Use a password manager (Bitwarden, 1Password), it is the single highest-impact security action you can take.\n\n📊 HaveIBeenPwned.com lists over 12 billion compromised credentials. Your password has likely been leaked.' },
-  { title:'🩺 Vital: HTTPS & Certificate Trust',
-    body:'The padlock icon signals transport encryption, not site legitimacy. Phishing sites routinely use HTTPS. Evaluate the domain name carefully, not just the lock.\n\n📊 80%+ of phishing sites now use HTTPS (Anti-Phishing Working Group, 2023). The padlock is a necessary but insufficient trust signal.' },
-  { title:'🩺 Vital: Browser Fingerprinting',
-    body:'Even without cookies, websites can identify you via your browser fingerprint, a combination of screen resolution, fonts, plugins, time zone, and hardware. This survives cookie deletion and private browsing.\n\n📊 Panopticlick (EFF) demonstrates that >99% of browsers are uniquely identifiable via fingerprinting alone.' },
-  { title:'🩺 Vital: Metadata Leakage',
-    body:'Documents, photos, and emails carry invisible metadata: GPS coordinates, author names, edit history, device model. Sharing a Word document or JPEG can inadvertently reveal sensitive information.\n\n📊 In 2010, McAfee accidentally exposed a list of confidential clients via document metadata in a public PDF.' },
-  { title:'🩺 Vital: Social Media Privacy',
-    body:'Public social media profiles enable OSINT (Open Source Intelligence), attackers piece together birthdays, family names, employers, and locations to craft targeted spear-phishing attacks.\n\n📊 75% of security awareness researchers cite LinkedIn as the most valuable OSINT source for social engineering reconnaissance.' },
-  { title:'🩺 Vital: Two-Factor SMS Weakness',
-    body:'SMS-based 2FA is better than no 2FA, but SIM-swapping attacks can hijack your phone number. Prefer authenticator apps (TOTP) or hardware keys (YubiKey) over SMS codes.\n\n📊 NIST SP 800-63B deprecated SMS as a second factor due to SIM-swap risks and SS7 protocol vulnerabilities.' },
-];
-
-let pulseIdx = 0;
-let ekgAnimId = null;
-
-function drawEKG(canvas, running){
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  let t = 0;
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    ctx.beginPath();
-    ctx.strokeStyle = '#8b5cf6';
-    ctx.lineWidth = 2;
-    ctx.shadowColor = '#8b5cf6';
-    ctx.shadowBlur = 6;
-    const speed = 3;
-    const px = (t * speed) % (W + 40);
-    for(let x=0; x<=W; x++){
-      const rel = x - px;
-      let y;
-      if(rel > -2 && rel < 0)        y = H/2 - 28;
-      else if(rel >= 0 && rel < 4)   y = H/2 + 18;
-      else if(rel >= 4 && rel < 8)   y = H/2 - 34;
-      else if(rel >= 8 && rel < 12)  y = H/2 + 14;
-      else if(rel >= 12 && rel < 16) y = H/2;
-      else                            y = H/2 + Math.sin(x*0.05)*3;
-      x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-    t++;
-    ekgAnimId = requestAnimationFrame(frame);
-  }
-  if(ekgAnimId) cancelAnimationFrame(ekgAnimId);
-  frame();
-}
-
-function renderPulseTip(){
-  const tip = PULSE_TIPS[pulseIdx];
-  document.getElementById('usecPulseTipTitle').textContent = tip.title;
-  document.getElementById('usecPulseTipBody').textContent  = tip.body;
-  document.getElementById('usecPulseCount').textContent    = `${pulseIdx+1} / ${PULSE_TIPS.length}`;
-  drawEKG(document.getElementById('usecEKG'));
-}
-
-document.getElementById('usec-pulse-btn').addEventListener('click', ()=>{
-  pulseIdx = 0;
-  renderPulseTip();
-  document.getElementById('usecPulsePanel').classList.add('active');
-});
-
-document.getElementById('usecPulseClose').addEventListener('click', ()=>{
-  document.getElementById('usecPulsePanel').classList.remove('active');
-  if(ekgAnimId){ cancelAnimationFrame(ekgAnimId); ekgAnimId=null; }
-});
-
-document.getElementById('usecPulseNext').addEventListener('click', ()=>{
-  pulseIdx = (pulseIdx+1) % PULSE_TIPS.length;
-  renderPulseTip();
-});
-
-document.getElementById('usecPulsePrev').addEventListener('click', ()=>{
-  pulseIdx = (pulseIdx - 1 + PULSE_TIPS.length) % PULSE_TIPS.length;
-  renderPulseTip();
-});
-
-})();
-</script>
-
-<!-- ============================================================
-     LEFT-SIDE ADD-ONS: Quiz + Did You Know + Ask My Research
-     ============================================================ -->
-<style>
-/* ── Left FAB stack ── */
-.usec-left-fab {
-  position:fixed;bottom:28px;left:18px;z-index:9990;
-  display:flex;flex-direction:column;gap:10px;align-items:flex-start;
-}
-.usec-left-btn {
-  width:50px;height:50px;border-radius:50%;border:none;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;font-size:20px;
-  box-shadow:0 4px 16px rgba(0,0,0,.32);transition:transform .2s;
-}
-.usec-left-btn:hover{transform:scale(1.12);}
-#usecQuizBtn  {background:#1a1a2e;}
-#usecDykBtn   {background:#00695c;}
-#usecAskBtn   {background:#4a148c;}
-
-/* ── Shared panel base ── */
-.usec-left-panel {
-  display:none;position:fixed;bottom:28px;left:80px;z-index:9991;
-  width:340px;background:#fff;border-radius:14px;
-  box-shadow:0 16px 48px rgba(0,0,0,.22);
-  animation:usec-slidein .28s cubic-bezier(.34,1.5,.64,1) both;
-  font-family:'Raleway',sans-serif;overflow:hidden;
-}
-.usec-left-panel.active{display:block;}
-@keyframes usec-slidein{
-  from{opacity:0;transform:translateX(-24px) scale(.95);}
-  to{opacity:1;transform:translateX(0) scale(1);}
-}
-.ulp-header{
-  padding:14px 16px 10px;display:flex;justify-content:space-between;align-items:center;
-}
-.ulp-header h4{margin:0;font-size:.95em;font-weight:700;color:#1a1a2e;}
-.ulp-header span{font-size:.7em;text-transform:uppercase;letter-spacing:.1em;color:#888;}
-.ulp-close{background:none;border:none;cursor:pointer;font-size:17px;color:#aaa;padding:0;}
-.ulp-body{padding:0 16px 16px;}
-
-/* ── Did You Know ── */
-.ulp-dyk-icon{font-size:32px;text-align:center;margin:4px 0 8px;}
-.ulp-dyk-text{font-size:.84em;color:#333;line-height:1.6;}
-.ulp-dyk-src{font-size:.72em;color:#999;margin-top:8px;}
-.ulp-dyk-dots{display:flex;gap:5px;justify-content:center;margin-top:10px;}
-.ulp-dyk-dot{width:7px;height:7px;border-radius:50%;background:#ccc;cursor:pointer;transition:background .2s;}
-.ulp-dyk-dot.active{background:#00695c;}
-
-/* ── Auto DYK toast ── */
-#usecAutoDyk{
-  display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);
-  background:#1a1a2e;color:#fff;border-radius:12px;padding:12px 18px;
-  max-width:360px;width:90%;z-index:9989;font-family:'Raleway',sans-serif;
-  box-shadow:0 8px 28px rgba(0,0,0,.35);cursor:pointer;
-  animation:usec-toast-in .4s cubic-bezier(.34,1.4,.64,1) both;
-}
-@keyframes usec-toast-in{
-  from{opacity:0;transform:translateX(-50%) translateY(20px);}
-  to{opacity:1;transform:translateX(-50%) translateY(0);}
-}
-#usecAutoDyk .uat-label{font-size:.68em;text-transform:uppercase;letter-spacing:.1em;color:#8b5cf6;margin-bottom:4px;}
-#usecAutoDyk .uat-text{font-size:.82em;line-height:1.5;}
-#usecAutoDyk .uat-dismiss{font-size:.7em;color:#aaa;margin-top:6px;}
-</style>
-
-<!-- Left FAB buttons -->
-<div class="usec-left-fab">
-  <button class="usec-left-btn" id="usecDykBtn" title="Did You Know?">💡</button>
-</div>
-
-<!-- Did You Know panel -->
-<div class="usec-left-panel" id="usecDykPanel">
-  <div class="ulp-header ulp-header-dyk">
-    <div><h4>Did You Know?</h4><span>Usable security facts</span></div>
-    <button class="ulp-close" id="usecDykClose">✕</button>
-  </div>
-  <div class="ulp-body">
-    <div class="ulp-dyk-icon" id="ulpDykIcon"></div>
-    <div class="ulp-dyk-text" id="ulpDykText"></div>
-    <div class="ulp-dyk-src"  id="ulpDykSrc"></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-top:10px;">
-    <button onclick="dykNav(-1)" style="background:none;border:1.5px solid #00695c;color:#00695c;border-radius:20px;padding:4px 12px;cursor:pointer;font-family:Raleway,sans-serif;font-size:.78em;">&#8592; Prev</button>
-    <div class="ulp-dyk-dots" id="ulpDykDots"></div>
-    <button onclick="dykNav(1)" style="background:none;border:1.5px solid #00695c;color:#00695c;border-radius:20px;padding:4px 12px;cursor:pointer;font-family:Raleway,sans-serif;font-size:.78em;">Next &#8594;</button>
-  </div>
-  </div>
-</div>
-
-<!-- Auto Did You Know toast -->
-<div id="usecAutoDyk">
-  <div class="uat-label">Did you know?</div>
-  <div class="uat-text" id="uatText"></div>
-  <div class="uat-dismiss">Click to dismiss</div>
-</div>
-
-<script>
-(function(){
-"use strict";
-
-/* ── helpers ── */
-function show(id){document.getElementById(id).classList.add('active');}
-function hide(id){document.getElementById(id).classList.remove('active');}
-function toggle(id){document.getElementById(id).classList.toggle('active');}
-
-/* =====================================================
-   DID YOU KNOW
-   ===================================================== */
-const DYKS = [
-  { icon:'🎣', text:'Spear-phishing attacks are targeted at specific individuals using personal information scraped from social media. They have a success rate 3 times higher than generic phishing emails.',
-    src:'Verizon DBIR, 2023' },
-  { icon:'🔓', text:'Over 80% of data breaches involve compromised or weak passwords. Yet most users choose passwords based on memorable personal information, making them predictable to attackers.',
-    src:'Ponemon Institute, 2022' },
-  { icon:'👁️', text:'Browser fingerprinting can identify you across websites without any cookies. Your screen size, installed fonts, and GPU rendering combine to create a near-unique identifier.',
-    src:'Laperdrix et al., IEEE S&P 2016' },
-  { icon:'📎', text:'The average employee receives 14 malicious emails per year. In financial services, that number rises to 49. Most go undetected because they mimic legitimate internal communications.',
-    src:'Symantec Internet Security Threat Report' },
-  { icon:'🧩', text:'Users who receive security training with interactive simulations retain 40% more information than those who read static policy documents. Experiential learning matters in security awareness.',
-    src:'SANS Security Awareness Report, 2022' },
-];
-
-let dykIdx=0;
-
-function loadDyk(i){
-  dykIdx=i;
-  document.getElementById('ulpDykIcon').textContent=DYKS[i].icon;
-  document.getElementById('ulpDykText').textContent=DYKS[i].text;
-  document.getElementById('ulpDykSrc').textContent='Source: '+DYKS[i].src;
-  document.querySelectorAll('.ulp-dyk-dot').forEach((d,j)=>{
-    d.classList.toggle('active',j===i);
-  });
-}
-
-function buildDots(){
-  const container=document.getElementById('ulpDykDots');
-  container.innerHTML='';
-  DYKS.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='ulp-dyk-dot'+(i===0?' active':'');
-    d.onclick=()=>loadDyk(i);
-    container.appendChild(d);
-  });
-}
-
-window.dykNav=function(dir){
-  const n=(dykIdx+dir+DYKS.length)%DYKS.length;
-  loadDyk(n);
-};
-document.getElementById('usecDykBtn').addEventListener('click',()=>{
-  toggle('usecDykPanel');
-  if(document.getElementById('usecDykPanel').classList.contains('active')){
-    buildDots(); loadDyk(0);
-  }
-});
-document.getElementById('usecDykClose').addEventListener('click',()=>hide('usecDykPanel'));
-
-/* =====================================================
-   AUTO DID YOU KNOW TOAST (after 12s)
-   ===================================================== */
-const autoFacts=[
-  "91% of cyberattacks begin with a phishing email. Human cognition, not technical flaws, is the primary attack surface.",
-  "Browser fingerprinting can track you across the web without cookies, surviving private browsing and ad blockers.",
-  "MFA reduces account compromise risk by over 99%, yet less than 30% of users enable it voluntarily."
-];
-setTimeout(()=>{
-  const t=document.getElementById('uatText');
-  t.textContent=autoFacts[Math.floor(Math.random()*autoFacts.length)];
-  const el=document.getElementById('usecAutoDyk');
-  el.style.display='block';
-  el.onclick=()=>{ el.style.display='none'; };
-  setTimeout(()=>{ el.style.display='none'; },9000);
-},12000);
-
 })();
 </script>
